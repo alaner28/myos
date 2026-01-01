@@ -1,0 +1,16 @@
+
+build/
+dump
+bochsout.txt
+
+.vscode/
+
+*.o
+*.iso
+*.bin
+*.img
+*.log
+
+.DS_Store
+*.swp
+*~
