@@ -1,5 +1,6 @@
 #include <myos/tty/tty.h>
 #include <stdint.h>
+#include "../.vscode/intellisense_helpers.h"
 
 #define TTY_WIDTH 80
 #define TTY_HEIGHT 25
@@ -55,4 +56,6 @@ void tty_clear() {
             *(buffer + x + y * TTY_WIDTH) = theme_color;
         }
     }
+    TTY_COLUMN = 0;
+    TTY_ROW = 0;
 }
