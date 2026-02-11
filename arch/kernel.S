@@ -1,29 +1,9 @@
-#include "multiboot.h"
-
-.section .multiboot
-    .long MB_MAGIC
-    .long MB_ALIGNED_4K_MEM_MAP
-    .long CHECKSUM(MB_ALIGNED_4K_MEM_MAP)
-
-.section .bss
-    /* According to System V ABI, the stack must be aligned at 16 bytes boundary */
-    .align 16
-    stack_bottom:
-        .skip 16318, 0
-    stack_top:
-
 .section .text
-    /*此处grub交接，GRUB使用平坦内存模型，基地址为0，线性地址等于逻辑地址*/
-    .global start_
-    .type start_, @function
-    start_:    
-        movl $stack_top, %esp
-        /* 
-            TODO: kernel init
-                1. Load GDT
-                2. Load IDT
-                3. Enable paging
-        */
+        
+    global _kernel_entry
+    .type _kernel_entry, @function    
+    _kernel_entry:
+
         call _kernel_init
 
         //gdt&idt init
@@ -53,7 +33,7 @@
         retf
         
     _after_gdt:
-        pushl %ebx
+        pushl %ebx  //multiboot info pointer which is saved in ebx by GRUB
         call _kernel_main
 
         cli
